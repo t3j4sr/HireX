@@ -150,47 +150,4 @@ Database	MongoDB / PostgreSQL
 Deployment	Vercel / Render / Railway
 
 
- Architecture
-
- HR Uploads JD
-        ↓
-NLP Processing → JD Embedding
-        ↓
-HR Uploads Resumes
-        ↓
-Resume Parser → Resume Embeddings
-        ↓
-Cosine Similarity Matching Engine
-        ↓
-AI Justification Generator
-        ↓
-Ranked Candidate Output
-
- Folder Structure
-root/
- ├── backend/
- │     ├── controllers/
- │     ├── models/
- │     ├── utils/
- │     ├── routes/
- │     └── server.js
- ├── frontend/
- │     ├── components/
- │     ├── pages/
- │     └── App.js
- ├── ml/
- │     ├── jd_embedding.py
- │     └── resume_parser.py
- └── README.md
-
- How to Run
-Backend
-cd backend
-npm install
-npm start
-
-Frontend
-cd frontend
-npm install
-npm run dev
-SSS
+ 
