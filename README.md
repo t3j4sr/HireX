@@ -1,73 +1,44 @@
-# Welcome to your Lovable project
+Intelligent Candidate Discovery & Matching Platform
 
-## Project info
+An AI-powered hiring engine that semantically understands job descriptions, parses resumes, and ranks candidates using embeddings, cosine similarity, and AI-generated rationales.
 
-**URL**: https://lovable.dev/projects/781d2235-6292-4b2d-a15d-4b1183c1ea04
 
-## How can I edit this code?
+Problem Statement
 
-There are several ways of editing your application.
+HR teams spend hours shortlisting candidates using keyword filters that fail to capture true skills or experience.
+Current systems cannot:
 
-**Use Lovable**
+Understand job descriptions semantically
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/781d2235-6292-4b2d-a15d-4b1183c1ea04) and start prompting.
+Measure real competence
 
-Changes made via Lovable will be committed automatically to this repo.
+Compare resumes contextually
 
-**Use your preferred IDE**
+Reduce manual workload
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Remove bias
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+This platform solves all of these.
 
-Follow these steps:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Tech Stack
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. Database: SQLite 
+2. AI/Embeddings: sentence-transformers (Runs locally on CPU).
+3. Extraction: Regex/Heuristic parser .
+4. Ranking: Cosine Similarity.
 
-# Step 3: Install the necessary dependencies.
-npm i
+Frontend :
+1. typescript
+React.js for enhanced design
+CSS scripting for complex and advanced styling.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
 
-**Edit a file directly in GitHub**
+Key Features
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Our AI-powered hiring platform intelligently analyzes job descriptions and resumes to understand skills, experience, and role expectations. It uses semantic embeddings to match candidates contextually rather than relying on simple keyword searches. The system ranks candidates by fit score and provides clear, human-readable explanations for each match. This enables recruiters to shortlist top talent quickly, accurately, and without bias.
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Next checkpoint target:
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/781d2235-6292-4b2d-a15d-4b1183c1ea04) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+DB ready, google authentication ready, frontend around 90% ready.
