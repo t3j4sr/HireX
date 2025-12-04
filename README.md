@@ -1,153 +1,73 @@
-HireX
+# Welcome to your Lovable project
 
-An AI-powered hiring engine that semantically understands job descriptions, parses resumes, and ranks candidates using embeddings, cosine similarity, and AI-generated rationales.
+## Project info
 
- Overview
+**URL**: https://lovable.dev/projects/781d2235-6292-4b2d-a15d-4b1183c1ea04
 
-Hiring today is slow, manual, and inefficient. Recruiters manually screen hundreds of resumes across multiple platforms like LinkedIn, Naukri, and job boards—resulting in missed talent, bias, and slow hiring cycles.
+## How can I edit this code?
 
-This platform replaces that broken process with an intelligent, AI-driven recommendation engine that:
+There are several ways of editing your application.
 
-Extracts skills, roles, seniority, and context from job descriptions
+**Use Lovable**
 
-Parses resumes automatically
+Simply visit the [Lovable Project](https://lovable.dev/projects/781d2235-6292-4b2d-a15d-4b1183c1ea04) and start prompting.
 
-Converts everything into embeddings
+Changes made via Lovable will be committed automatically to this repo.
 
-Computes candidate fit using cosine similarity
+**Use your preferred IDE**
 
-Generates human-readable justifications
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-Outputs a ranked candidate list
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
- Problem Statement
+Follow these steps:
 
-HR teams spend hours shortlisting candidates using keyword filters that fail to capture true skills or experience.
-Current systems cannot:
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
 
-Understand job descriptions semantically
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
 
-Measure real competence
+# Step 3: Install the necessary dependencies.
+npm i
 
-Compare resumes contextually
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
 
-Reduce manual workload
+**Edit a file directly in GitHub**
 
-Remove bias
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-This platform solves all of these.
-  
-Solution
+**Use GitHub Codespaces**
 
- Job Description Understanding
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-AI extracts required skills, responsibilities, hidden expectations, seniority level.
+## What technologies are used for this project?
 
- Resume Parsing
+This project is built with:
 
-Extracts experience, skills, achievements from PDFs/DOCX files.
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
- Embedding-Based Semantic Matching
+## How can I deploy this project?
 
-Both JD and resumes are converted into vector embeddings.
+Simply open [Lovable](https://lovable.dev/projects/781d2235-6292-4b2d-a15d-4b1183c1ea04) and click on Share -> Publish.
 
- Matching Engine
+## Can I connect a custom domain to my Lovable project?
 
-Uses cosine similarity to compute:
+Yes, you can!
 
-Overall match score (0–100)
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-Skill alignment
-
-Experience relevance
-
-AI Justification
-
-Gemini/LLM generates human-readable reasoning for why a candidate is a good fit.
-
- Ranked Output
-
-Recruiters receive a structured list of the best candidates.
-
- Workflow
-1. Recruiter Uploads Job Description
-
-System understands role context, skills, domain, seniority.
-
-2. Recruiter Uploads Resumes
-
-AI extracts clean text and identifies skills, experience, and signals of role fit.
-
-3. Embedding Generation
-
-JD and resume text → vector embeddings for semantic comparison.
-
-4. Candidate Matching
-
-Cosine similarity is computed between job embedding and each resume embedding.
-
-5. AI Explanation
-
-AI summarizes why each candidate fits:
-
-Relevant experience
-
-Skill matches
-
-Strengths
-
-Missing skills
-
-6. Ranked Candidate List
-
-Sorted from highest to lowest fit.
-
-7. Recruiter Finalizes Shortlist
-
-System improves over time by learning from selections.
-
- Why We’re Building This
-
-Recruitment is slow, chaotic, and inconsistent.
-We’re solving:
-
-Wasted screening hours
-
-Missed high-quality candidates
-
-Keyword-based inaccuracies
-
-Human bias
-
-Unscalable manual filtering
-
-This platform makes hiring 10× faster, smarter, and more accurate.
-
- Features
-
-Job description parsing
-
-AI-based resume extraction
-
-Embedding-based semantic search
-
-Cosine similarity scoring
-
-Candidate ranking
-
-AI-generated rationale
-
-Recruiter dashboard
-
- Tech Stack
-
-Category	Technology
-Frontend	React.js / Next.js
-Backend	Node.js / Express OR Python FastAPI
-AI/NLP	Sentence-BERT, Gemini Embeddings, spaCy
-Vector DB	FAISS / Pinecone
-Database	MongoDB / PostgreSQL
-Deployment	Vercel / Render / Railway
-
-
- 
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
