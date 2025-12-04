@@ -1,0 +1,23 @@
+/app
+  /components
+    HeroGeometric.tsx
+    Navbar.tsx
+    AnimatedButton.tsx
+    FeatureCard.tsx
+    UploadBox.tsx
+    DataOptionsPanel.tsx
+    JobCard.tsx
+    Footer.tsx
+  /data-cleaner
+    page.tsx
+  /jobs
+    page.tsx
+  /about
+    page.tsx
+  /contact
+    page.tsx
+  page.tsx
+/lib
+  utils.ts
+/styles
+  globals.css
