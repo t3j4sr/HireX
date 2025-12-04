@@ -1,21 +1,10 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { ChevronDown, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ElegantShape } from "@/components/ui/shape-landing-hero";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import logo from "@/assets/logo.jpeg";
 
 const Login = () => {
-  const { theme, setTheme } = useTheme();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
@@ -44,78 +33,10 @@ const Login = () => {
           "flex items-center justify-between"
         )}
       >
-        {/* Logo Space */}
-        <div className="flex items-center gap-2 min-w-[120px]">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-rose-500 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">H</span>
-          </div>
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="HireX Logo" className="w-8 h-8 rounded-lg object-contain" />
           <span className="text-white font-semibold tracking-wide">HireX</span>
-        </div>
-
-        {/* Center Navigation Links */}
-        <div className="flex items-center gap-8">
-          {/* Add JD Dropdown */}
-          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-            <DropdownMenuTrigger
-              className={cn(
-                "flex items-center gap-1.5",
-                "text-white/60 hover:text-white",
-                "text-sm font-medium tracking-wide",
-                "transition-colors duration-300",
-                "outline-none"
-              )}
-            >
-              Add JD
-              <ChevronDown
-                className={cn(
-                  "w-4 h-4 transition-transform duration-200",
-                  isDropdownOpen && "rotate-180"
-                )}
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="center"
-              className={cn(
-                "bg-[#0a0a0a]/95 backdrop-blur-xl",
-                "border border-white/[0.1]",
-                "rounded-xl shadow-2xl",
-                "min-w-[200px]"
-              )}
-            >
-              <DropdownMenuItem
-                className={cn(
-                  "text-white/70 hover:text-white hover:bg-white/[0.05]",
-                  "cursor-pointer px-4 py-3",
-                  "focus:bg-white/[0.05] focus:text-white"
-                )}
-              >
-                <Link to="/create-jd" className="w-full">
-                  1. Create new JD
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className={cn(
-                  "text-white/70 hover:text-white hover:bg-white/[0.05]",
-                  "cursor-pointer px-4 py-3",
-                  "focus:bg-white/[0.05] focus:text-white"
-                )}
-              >
-                <Link to="/upload-jd" className="w-full">
-                  2. Upload existing JD
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-
-        {/* Right side - Theme toggle */}
-        <div className="min-w-[120px] flex justify-end">
-          <button 
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 text-white/60 hover:text-white transition-colors"
-          >
-            {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
         </div>
       </motion.nav>
 
@@ -196,12 +117,12 @@ const Login = () => {
                 to="/dashboard"
                 className={cn(
                   "inline-block px-8 py-3 rounded-full",
-                  "bg-white/[0.05] backdrop-blur-md",
-                  "border border-white/[0.15]",
-                  "text-white font-medium tracking-wide",
-                  "transition-all duration-500 ease-out",
-                  "hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 hover:to-rose-500",
-                  "hover:border-transparent hover:shadow-lg hover:shadow-purple-500/25",
+                  "bg-white text-[#030303]",
+                  "border border-white",
+                  "font-medium tracking-wide",
+                  "transition-all duration-300 ease-out",
+                  "hover:bg-[#030303] hover:text-white",
+                  "hover:border-white",
                   "hover:scale-105"
                 )}
               >

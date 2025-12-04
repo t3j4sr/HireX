@@ -7,17 +7,13 @@ import { useTheme } from "next-themes";
 const Index = () => {
   const { theme, setTheme } = useTheme();
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
   return (
     <DottedSurface className="min-h-screen w-full">
       {/* Floating Buttons */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
         {/* Theme Toggle Button */}
         <button
-          onClick={toggleTheme}
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className={cn(
             "flex items-center justify-center w-12 h-12",
             "bg-foreground/5 backdrop-blur-md",
