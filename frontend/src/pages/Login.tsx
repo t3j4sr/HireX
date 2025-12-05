@@ -1,10 +1,47 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ElegantShape } from "@/components/ui/shape-landing-hero";
 import logo from "@/assets/logo.jpeg";
+import { GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "@/contexts/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import { GradualSpacing } from "@/components/ui/gradual-spacing";
+
+interface GoogleJwtPayload {
+  name: string;
+  email: string;
+  picture: string;
+}
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login, loginAsGuest, isAuthenticated } = useAuth();
+
+  // If already logged in, redirect to dashboard
+  if (isAuthenticated) {
+    navigate("/dashboard");
+  }
+
+  const handleGoogleSuccess = (credentialResponse: any) => {
+    try {
+      const decoded = jwtDecode<GoogleJwtPayload>(credentialResponse.credential);
+      login({
+        name: decoded.name,
+        email: decoded.email,
+        picture: decoded.picture,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  };
+
+  const handleGuestLogin = () => {
+    loginAsGuest();
+    navigate("/dashboard");
+  };
+
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
@@ -96,39 +133,49 @@ const Login = () => {
             initial="hidden"
             animate="visible"
           >
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2 md:mb-4 tracking-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
-                HireX
-              </span>
-            </h1>
+            <div className="mb-2 md:mb-4 flex justify-center">
+              <GradualSpacing
+                className="font-display text-center text-4xl font-bold -tracking-widest text-white md:text-7xl md:leading-[5rem]"
+                text="HireX"
+              />
+            </div>
             <p className="text-xl sm:text-2xl md:text-3xl text-white/60 font-light tracking-wide mb-6 md:mb-8">
               An AI-powered hiring engine
             </p>
           </motion.div>
 
-            <motion.div
-              custom={1}
-              variants={fadeUpVariants}
-              initial="hidden"
-              animate="visible"
-              className="mb-8"
-            >
-              <Link
-                to="/dashboard"
-                className={cn(
-                  "inline-block px-8 py-3 rounded-full",
-                  "bg-white text-[#030303]",
-                  "border border-white",
-                  "font-medium tracking-wide",
-                  "transition-all duration-300 ease-out",
-                  "hover:bg-[#030303] hover:text-white",
-                  "hover:border-white",
-                  "hover:scale-105"
-                )}
+          <motion.div
+            custom={1}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-8"
+          >
+            <p className="text-base sm:text-lg text-white/40 mb-6">
+              Sign in with Google to get started
+            </p>
+            <div className="flex flex-col items-center gap-4">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => console.log("Login Failed")}
+                theme="filled_black"
+                size="large"
+                shape="pill"
+                text="signin_with"
+              />
+              <div className="flex items-center gap-3 text-white/30">
+                <div className="h-px w-12 bg-white/20"></div>
+                <span className="text-sm">or</span>
+                <div className="h-px w-12 bg-white/20"></div>
+              </div>
+              <button
+                onClick={handleGuestLogin}
+                className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white/80 hover:text-white transition-all duration-300 text-sm font-medium backdrop-blur-sm"
               >
-                Get Started
-              </Link>
-            </motion.div>
+                Continue as Guest
+              </button>
+            </div>
+          </motion.div>
 
           <motion.div
             custom={2}
@@ -137,8 +184,8 @@ const Login = () => {
             animate="visible"
           >
             <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
-              Transform your recruitment process with intelligent candidate matching, 
-              automated screening, and data-driven insights. Find the perfect talent 
+              Transform your recruitment process with intelligent candidate matching,
+              automated screening, and data-driven insights. Find the perfect talent
               faster than ever before.
             </p>
           </motion.div>

@@ -1,9 +1,26 @@
-Intelligent Candidate Discovery & Matching Platform
+HireX
 
 An AI-powered hiring engine that semantically understands job descriptions, parses resumes, and ranks candidates using embeddings, cosine similarity, and AI-generated rationales.
 
+ Overview
 
-Problem Statement
+Hiring today is slow, manual, and inefficient. Recruiters manually screen hundreds of resumes across multiple platforms like LinkedIn, Naukri, and job boards—resulting in missed talent, bias, and slow hiring cycles.
+
+This platform replaces that broken process with an intelligent, AI-driven recommendation engine that:
+
+Extracts skills, roles, seniority, and context from job descriptions
+
+Parses resumes automatically
+
+Converts everything into embeddings
+
+Computes candidate fit using cosine similarity
+
+Generates human-readable justifications
+
+Outputs a ranked candidate list
+
+ Problem Statement
 
 HR teams spend hours shortlisting candidates using keyword filters that fail to capture true skills or experience.
 Current systems cannot:
@@ -19,26 +36,118 @@ Reduce manual workload
 Remove bias
 
 This platform solves all of these.
+  
+Solution
+
+ Job Description Understanding
+
+AI extracts required skills, responsibilities, hidden expectations, seniority level.
+
+ Resume Parsing
+
+Extracts experience, skills, achievements from PDFs/DOCX files.
+
+ Embedding-Based Semantic Matching
+
+Both JD and resumes are converted into vector embeddings.
+
+ Matching Engine
+
+Uses cosine similarity to compute:
+
+Overall match score (0–100)
+
+Skill alignment
+
+Experience relevance
+
+AI Justification
+
+Gemini/LLM generates human-readable reasoning for why a candidate is a good fit.
+
+ Ranked Output
+
+Recruiters receive a structured list of the best candidates.
+
+ Workflow
+1. Recruiter Uploads Job Description
+
+System understands role context, skills, domain, seniority.
+
+2. Recruiter Uploads Resumes
+
+AI extracts clean text and identifies skills, experience, and signals of role fit.
+
+3. Embedding Generation
+
+JD and resume text → vector embeddings for semantic comparison.
+
+4. Candidate Matching
+
+Cosine similarity is computed between job embedding and each resume embedding.
+
+5. AI Explanation
+
+AI summarizes why each candidate fits:
+
+Relevant experience
+
+Skill matches
+
+Strengths
+
+Missing skills
+
+6. Ranked Candidate List
+
+Sorted from highest to lowest fit.
+
+7. Recruiter Finalizes Shortlist
+
+System improves over time by learning from selections.
+
+ Why We’re Building This
+
+Recruitment is slow, chaotic, and inconsistent.
+We’re solving:
+
+Wasted screening hours
+
+Missed high-quality candidates
+
+Keyword-based inaccuracies
+
+Human bias
+
+Unscalable manual filtering
+
+This platform makes hiring 10× faster, smarter, and more accurate.
+
+ Features
+
+Job description parsing
+
+AI-based resume extraction
+
+Embedding-based semantic search
+
+Cosine similarity scoring
+
+Candidate ranking
+
+AI-generated rationale
+
+Recruiter dashboard
+
+ Tech Stack
+
+Category	Technology
+Frontend	React.js / Next.js
+Backend	Node.js / Express OR Python FastAPI
+AI/NLP	Sentence-BERT, Gemini Embeddings, spaCy
+Vector DB	FAISS / Pinecone
+Database	MongoDB / PostgreSQL
+Deployment	Vercel / Render / Railway
 
 
-Tech Stack
-
-1. Database: SQLite 
-2. AI/Embeddings: sentence-transformers (Runs locally on CPU).
-3. Extraction: Regex/Heuristic parser .
-4. Ranking: Cosine Similarity.
-
-Frontend :
-1. typescript
-React.js for enhanced design
-CSS scripting for complex and advanced styling.
-
-
-Key Features
-
-Our AI-powered hiring platform intelligently analyzes job descriptions and resumes to understand skills, experience, and role expectations. It uses semantic embeddings to match candidates contextually rather than relying on simple keyword searches. The system ranks candidates by fit score and provides clear, human-readable explanations for each match. This enables recruiters to shortlist top talent quickly, accurately, and without bias.
-
-
-Next checkpoint target:
-
-DB ready, google authentication ready, frontend around 90% ready.
+ 

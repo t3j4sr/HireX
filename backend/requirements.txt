@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+sqlmodel
+sentence-transformers
+scikit-learn
+python-dotenv
+pdfplumber
+unstructured
+python-docx
+

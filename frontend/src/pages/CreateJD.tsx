@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import Header from "@/components/Header";
+import { api } from "@/services/api";
 
 interface SavedJD {
   id: string;
@@ -41,34 +42,41 @@ const CreateJD = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!jobDescription.trim()) {
       toast.error("Please enter a job description");
       return;
     }
 
     setIsProcessing(true);
-    
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Save this JD to the list
-    const newJD: SavedJD = {
-      id: Date.now().toString(),
-      content: jobDescription,
-      createdAt: new Date().toISOString(),
-      title: extractTitleFromJD(jobDescription)
-    };
 
-    const updatedJDs = [newJD, ...savedJDs].slice(0, 10); // Keep last 10
-    setSavedJDs(updatedJDs);
-    localStorage.setItem("savedJDs", JSON.stringify(updatedJDs));
-    localStorage.setItem("activeJD", jobDescription);
-    
-    toast.success("Job description created! Finding matching candidates...");
-    setIsProcessing(false);
-    
-    navigate("/candidates");
+    try {
+      const title = extractTitleFromJD(jobDescription);
+      const data = await api.createJob(title, jobDescription);
+
+      // Save this JD to the list (Local history)
+      const newJD: SavedJD = {
+        id: data.job_id.toString(),
+        content: jobDescription,
+        createdAt: new Date().toISOString(),
+        title: title
+      };
+
+      const updatedJDs = [newJD, ...savedJDs].slice(0, 10); // Keep last 10
+      setSavedJDs(updatedJDs);
+      localStorage.setItem("savedJDs", JSON.stringify(updatedJDs));
+
+      toast.success("Job description created! Finding matching candidates...");
+
+      // Navigate with jobId
+      navigate("/candidates", { state: { jobId: data.job_id, jobTitle: title } });
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to create job. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const loadTemplate = (jd: SavedJD) => {
@@ -89,7 +97,7 @@ const CreateJD = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="container mx-auto px-6 py-8 max-w-4xl">
+      <main className="container mx-auto px-4 md:px-6 py-8 max-w-4xl">
         <Link
           to="/dashboard"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
