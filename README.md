@@ -1,153 +1,214 @@
-HireX
+# HireX - AI-Powered Hiring Platform
 
-An AI-powered hiring engine that semantically understands job descriptions, parses resumes, and ranks candidates using embeddings, cosine similarity, and AI-generated rationales.
+An intelligent recruitment platform that uses AI to match candidates with job descriptions, analyze resumes, and streamline the hiring process.
 
- Overview
+## 🚀 Features
 
-Hiring today is slow, manual, and inefficient. Recruiters manually screen hundreds of resumes across multiple platforms like LinkedIn, Naukri, and job boards—resulting in missed talent, bias, and slow hiring cycles.
+- **AI-Powered Candidate Matching**: Semantic search using embeddings to match candidates with job descriptions
+- **Resume Parsing**: Automatic extraction of skills, experience, and qualifications from PDF/DOCX resumes
+- **Bulk Upload**: Upload multiple resumes at once
+- **Smart Ranking**: AI-driven candidate ranking based on job requirements
+- **Google Authentication**: Secure login with Google OAuth
+- **Guest Mode**: Quick access for testing without authentication
+- **Modern UI**: Beautiful, responsive interface with dark mode support
 
-This platform replaces that broken process with an intelligent, AI-driven recommendation engine that:
+## 📋 Prerequisites
 
-Extracts skills, roles, seniority, and context from job descriptions
+- **Python 3.8+**
+- **Node.js 16+** and npm
+- **Google API Key** (Gemini API for AI features)
+- **Google OAuth Client ID** (for authentication)
 
-Parses resumes automatically
+## 🛠️ Installation & Setup
 
-Converts everything into embeddings
+### 1. Clone the Repository
 
-Computes candidate fit using cosine similarity
+```bash
+git clone <your-repo-url>
+cd HireX
+```
 
-Generates human-readable justifications
+### 2. Backend Setup
 
-Outputs a ranked candidate list
+#### Install Python Dependencies
 
- Problem Statement
+```bash
+cd backend
+pip install -r requirements.txt
+```
 
-HR teams spend hours shortlisting candidates using keyword filters that fail to capture true skills or experience.
-Current systems cannot:
+#### Configure Environment Variables
 
-Understand job descriptions semantically
+Create a `.env` file in the `backend` directory:
 
-Measure real competence
+```env
+GOOGLE_API_KEY=your_gemini_api_key_here
+DATABASE_URL=sqlite:///./hirex.db
+```
 
-Compare resumes contextually
+**Getting your Google API Key:**
+1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a new API key
+3. Copy and paste it into the `.env` file
 
-Reduce manual workload
+### 3. Frontend Setup
 
-Remove bias
+#### Install Node Dependencies
 
-This platform solves all of these.
-  
-Solution
+```bash
+cd ../frontend
+npm install
+```
 
- Job Description Understanding
+#### Configure Google OAuth (Optional)
 
-AI extracts required skills, responsibilities, hidden expectations, seniority level.
+If you want to use Google authentication instead of guest mode:
 
- Resume Parsing
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add `http://localhost:8080` to authorized JavaScript origins
+6. Update `frontend/src/main.tsx` with your Client ID
 
-Extracts experience, skills, achievements from PDFs/DOCX files.
+## 🚀 Running the Application
 
- Embedding-Based Semantic Matching
+### Start Backend Server
 
-Both JD and resumes are converted into vector embeddings.
+From the project root directory:
 
- Matching Engine
+```bash
+# Windows PowerShell
+$env:PYTHONPATH='<full-path-to-HireX-folder>'; uvicorn backend.main:app --reload --host 0.0.0.0 --port 8002
 
-Uses cosine similarity to compute:
+# Linux/Mac
+PYTHONPATH=<full-path-to-HireX-folder> uvicorn backend.main:app --reload --host 0.0.0.0 --port 8002
+```
 
-Overall match score (0–100)
+The backend will be available at: `http://localhost:8002`
 
-Skill alignment
+### Start Frontend Server
 
-Experience relevance
+In a new terminal:
 
-AI Justification
+```bash
+cd frontend
+npm run dev
+```
 
-Gemini/LLM generates human-readable reasoning for why a candidate is a good fit.
+The frontend will be available at: `http://localhost:8080`
 
- Ranked Output
-
-Recruiters receive a structured list of the best candidates.
-
- Workflow
-1. Recruiter Uploads Job Description
-
-System understands role context, skills, domain, seniority.
-
-2. Recruiter Uploads Resumes
-
-AI extracts clean text and identifies skills, experience, and signals of role fit.
-
-3. Embedding Generation
-
-JD and resume text → vector embeddings for semantic comparison.
-
-4. Candidate Matching
-
-Cosine similarity is computed between job embedding and each resume embedding.
-
-5. AI Explanation
-
-AI summarizes why each candidate fits:
-
-Relevant experience
-
-Skill matches
-
-Strengths
-
-Missing skills
-
-6. Ranked Candidate List
-
-Sorted from highest to lowest fit.
-
-7. Recruiter Finalizes Shortlist
-
-System improves over time by learning from selections.
-
- Why We’re Building This
-
-Recruitment is slow, chaotic, and inconsistent.
-We’re solving:
-
-Wasted screening hours
-
-Missed high-quality candidates
-
-Keyword-based inaccuracies
-
-Human bias
-
-Unscalable manual filtering
-
-This platform makes hiring 10× faster, smarter, and more accurate.
-
- Features
-
-Job description parsing
-
-AI-based resume extraction
-
-Embedding-based semantic search
-
-Cosine similarity scoring
-
-Candidate ranking
-
-AI-generated rationale
-
-Recruiter dashboard
-
- Tech Stack
-
-Category	Technology
-Frontend	React.js / Next.js
-Backend	Node.js / Express OR Python FastAPI
-AI/NLP	Sentence-BERT, Gemini Embeddings, spaCy
-Vector DB	FAISS / Pinecone
-Database	MongoDB / PostgreSQL
-Deployment	Vercel / Render / Railway
-
-
- 
+## 📖 Usage
+
+1. **Access the Application**: Open `http://localhost:8080` in your browser
+2. **Login**: Use Google Sign-In or "Continue as Guest"
+3. **Upload Resumes**: Go to Candidates page and upload PDF/DOCX resumes
+4. **Create Job Description**: Navigate to "Create JD" and define your requirements
+5. **View Ranked Candidates**: See AI-matched candidates sorted by relevance
+6. **Manage Candidates**: Delete individual candidates or clear all
+
+## 🗂️ Project Structure
+
+```
+HireX/
+├── backend/
+│   ├── main.py              # FastAPI application & endpoints
+│   ├── models.py            # Database models
+│   ├── database.py          # Database configuration
+│   ├── services/
+│   │   ├── parser.py        # Resume parsing logic
+│   │   └── llm.py           # AI/LLM integration
+│   ├── requirements.txt     # Python dependencies
+│   └── .env                 # Environment variables
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/           # React pages
+│   │   ├── components/      # Reusable components
+│   │   ├── services/        # API integration
+│   │   └── contexts/        # React contexts
+│   ├── package.json         # Node dependencies
+│   └── vite.config.ts       # Vite configuration
+│
+└── README.md
+```
+
+## 🔧 API Endpoints
+
+### Candidates
+- `POST /api/v1/upload` - Upload resumes (bulk)
+- `GET /api/v1/candidates` - Get all candidates
+- `DELETE /api/v1/candidates/{id}` - Delete a candidate
+- `DELETE /api/v1/candidates` - Delete all candidates
+
+### Jobs
+- `POST /api/v1/jobs` - Create a job description
+- `GET /api/v1/jobs/{job_id}/candidates` - Get ranked candidates for a job
+
+### Utilities
+- `POST /api/v1/seed` - Seed database with sample candidates
+- `POST /api/v1/candidates/regenerate-embeddings` - Regenerate embeddings
+
+## 🧪 Testing
+
+The application comes pre-seeded with 5 sample candidates on startup. You can:
+- Upload your own resumes (PDF/DOCX)
+- Create custom job descriptions
+- Test the ranking algorithm
+
+## 🐛 Troubleshooting
+
+### Backend Issues
+
+**ModuleNotFoundError: No module named 'backend'**
+- Make sure you're running from the project root
+- Set PYTHONPATH correctly to the HireX folder
+
+**API Key Error**
+- Verify your Google API key in `.env`
+- Check API key has Gemini API enabled
+
+### Frontend Issues
+
+**Port 8080 already in use**
+- Change port in `vite.config.ts`
+- Or kill the process using port 8080
+
+**Google OAuth not working**
+- Verify Client ID is correct
+- Check authorized origins include `http://localhost:8080`
+
+## 🔐 Security Notes
+
+- Never commit `.env` files with real API keys
+- Use environment variables for sensitive data
+- For production, use proper authentication and HTTPS
+
+## 📝 Technologies Used
+
+### Backend
+- FastAPI - Modern Python web framework
+- SQLModel - SQL database ORM
+- Sentence Transformers - Semantic embeddings
+- Google Gemini API - AI/LLM capabilities
+- PDFPlumber & python-docx - Document parsing
+
+### Frontend
+- React + TypeScript
+- Vite - Build tool
+- TailwindCSS - Styling
+- Framer Motion - Animations
+- Radix UI - Component primitives
+- React Router - Navigation
+
+## 📄 License
+
+This project is for educational/hackathon purposes.
+
+## 🤝 Contributing
+
+Feel free to submit issues and enhancement requests!
+
+---
+
+**Made with ❤️ for RV Hack**

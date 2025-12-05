@@ -112,7 +112,7 @@ const Candidates = () => {
         const updatedCandidates = candidates.filter(c => c.id !== id);
         setCandidates(updatedCandidates);
         toast.success("Candidate deleted successfully");
-        
+
         // If we're on a job-specific view, refresh the candidates
         if (jobId) {
           fetchCandidates();
@@ -121,6 +121,19 @@ const Candidates = () => {
         console.error("Delete error:", error);
         const errorMessage = error?.response?.data?.detail || error?.message || "Failed to delete candidate. Please try again.";
         toast.error(errorMessage);
+      }
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    if (window.confirm("Are you sure you want to delete ALL candidates? This action cannot be undone.")) {
+      try {
+        await api.deleteAllCandidates();
+        setCandidates([]);
+        toast.success("All candidates deleted successfully");
+      } catch (error: any) {
+        console.error("Delete all error:", error);
+        toast.error("Failed to delete all candidates");
       }
     }
   };
@@ -218,16 +231,16 @@ const Candidates = () => {
     try {
       const results = await api.uploadResumes(files);
       console.log("Upload results:", results);
-      
+
       // Check if there are any errors in the results
       const errors = results.filter((r: any) => r.status === "error");
       const successes = results.filter((r: any) => r.status === "success");
-      
+
       if (errors.length > 0) {
         const errorMessages = errors.map((e: any) => `${e.filename}: ${e.detail || 'Unknown error'}`).join(", ");
         toast.error(`Some files failed: ${errorMessages}`);
       }
-      
+
       if (successes.length > 0) {
         setUploadDialogOpen(false);
         fetchCandidates();
@@ -296,22 +309,33 @@ const Candidates = () => {
             />
           </div>
 
-          <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-2">
-                <Upload className="w-4 h-4" strokeWidth={1.5} />
-                Upload Resumes
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>Upload Resumes (Bulk)</DialogTitle>
-              </DialogHeader>
-              <div className="border border-dashed border-border rounded-lg bg-background">
-                <FileUpload onChange={handleFileUpload} />
-              </div>
-            </DialogContent>
-          </Dialog>
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              onClick={handleDeleteAll}
+              className="flex items-center gap-2"
+            >
+              <Trash className="w-4 h-4" strokeWidth={1.5} />
+              Clear All
+            </Button>
+
+            <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="flex items-center gap-2">
+                  <Upload className="w-4 h-4" strokeWidth={1.5} />
+                  Upload Resumes
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle>Upload Resumes (Bulk)</DialogTitle>
+                </DialogHeader>
+                <div className="border border-dashed border-border rounded-lg bg-background">
+                  <FileUpload onChange={handleFileUpload} />
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </motion.div>
 
         {loading ? (
@@ -373,6 +397,16 @@ const Candidates = () => {
                         </div>
 
                         <div className="flex items-center gap-3 flex-shrink-0">
+                          <button
+                            className="p-2 text-foreground/50 hover:text-destructive transition-colors rounded-lg hover:bg-destructive/10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteCandidate(candidate.id);
+                            }}
+                            title="Delete Candidate"
+                          >
+                            <Trash className="w-5 h-5" strokeWidth={1.5} />
+                          </button>
                           <button className="p-2 text-foreground/50 hover:text-foreground transition-colors rounded-lg hover:bg-muted/50">
                             <ThumbsUp className="w-5 h-5" strokeWidth={1.5} />
                           </button>
@@ -454,27 +488,6 @@ const Candidates = () => {
                                 <p className="text-sm text-muted-foreground leading-relaxed">
                                   {candidate.aiAnalysis}
                                 </p>
-                              </div>
-
-                              {/* Delete Button */}
-                              <div 
-                                className="flex justify-end mt-4 pt-4 border-t border-border"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <Button
-                                  variant="destructive"
-                                  size="sm"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    handleDeleteCandidate(candidate.id);
-                                  }}
-                                  className="flex items-center gap-2"
-                                  type="button"
-                                >
-                                  <Trash className="w-4 h-4" strokeWidth={1.5} />
-                                  Delete Candidate
-                                </Button>
                               </div>
                             </div>
                           </motion.div>
