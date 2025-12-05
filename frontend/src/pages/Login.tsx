@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ElegantShape } from "@/components/ui/shape-landing-hero";
 import logo from "@/assets/logo.jpeg";
+import hxLogo from "@/assets/hx-logo.png";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/contexts/AuthContext";
 import { jwtDecode } from "jwt-decode";
@@ -133,11 +134,20 @@ const Login = () => {
             initial="hidden"
             animate="visible"
           >
-            <div className="mb-2 md:mb-4 flex justify-center">
-              <GradualSpacing
-                className="font-display text-center text-4xl font-bold -tracking-widest text-white md:text-7xl md:leading-[5rem]"
-                text="HireX"
-              />
+            <div className="mb-6 md:mb-8 flex flex-col items-center gap-4">
+              <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] xl:w-[36rem] xl:h-[36rem] flex items-center justify-center">
+                <img 
+                  src={hxLogo} 
+                  alt="HireX Logo" 
+                  className="w-full h-full object-contain drop-shadow-2xl scale-110"
+                />
+              </div>
+              <div className="mb-2 md:mb-4">
+                <GradualSpacing
+                  className="font-display text-center text-4xl font-bold -tracking-widest text-white md:text-7xl md:leading-[5rem]"
+                  text="HireX"
+                />
+              </div>
             </div>
             <p className="text-xl sm:text-2xl md:text-3xl text-white/60 font-light tracking-wide mb-6 md:mb-8">
               An AI-powered hiring engine

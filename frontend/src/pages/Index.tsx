@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import hxLogo from "@/assets/hx-logo.png";
 
 const Index = () => {
   const { theme, setTheme } = useTheme();
@@ -55,7 +56,7 @@ const Index = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
         <div
           aria-hidden="true"
           className={cn(
@@ -64,9 +65,18 @@ const Index = () => {
             "blur-[30px]"
           )}
         />
-        <h1 className="font-display text-7xl md:text-9xl font-bold tracking-tight text-foreground">
-          HireX
-        </h1>
+        <div className="relative z-10 flex flex-col items-center gap-6">
+          <div className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 flex items-center justify-center">
+            <img 
+              src={hxLogo} 
+              alt="HireX Logo" 
+              className="w-full h-full object-contain drop-shadow-2xl"
+            />
+          </div>
+          <h1 className="font-display text-7xl md:text-9xl font-bold tracking-tight text-foreground">
+            HireX
+          </h1>
+        </div>
       </div>
     </DottedSurface>
   );

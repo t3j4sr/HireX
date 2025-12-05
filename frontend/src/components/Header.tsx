@@ -60,7 +60,12 @@ const Header = () => {
           className
         )}
       >
-        <LayoutDashboard className="w-4 h-4" />
+        <LayoutDashboard className={cn(
+          "w-4 h-4 transition-all",
+          isActive("/dashboard") 
+            ? "text-foreground" 
+            : "text-foreground/60 hover:text-foreground/80"
+        )} strokeWidth={1.5} />
         Dashboard
       </Link>
 
@@ -75,7 +80,12 @@ const Header = () => {
           className
         )}
       >
-        <Briefcase className="w-4 h-4" />
+        <Briefcase className={cn(
+          "w-4 h-4 transition-all",
+          isActive("/create-jd") 
+            ? "text-foreground" 
+            : "text-foreground/60 hover:text-foreground/80"
+        )} strokeWidth={1.5} />
         Create JD
       </Link>
 
@@ -90,7 +100,12 @@ const Header = () => {
           className
         )}
       >
-        <Users className="w-4 h-4" />
+        <Users className={cn(
+          "w-4 h-4 transition-all",
+          isActive("/candidates") 
+            ? "text-foreground" 
+            : "text-foreground/60 hover:text-foreground/80"
+        )} strokeWidth={1.5} />
         Candidates
       </Link>
     </>
@@ -122,7 +137,7 @@ const Header = () => {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="w-6 h-6" />
+                <Menu className="w-6 h-6 text-foreground/70" strokeWidth={1.5} />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[240px] sm:w-[300px]">
@@ -152,8 +167,8 @@ const Header = () => {
 
       {/* Right side */}
       <div className="flex items-center gap-2 md:gap-4">
-        <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-          <Bell className="w-5 h-5" />
+        <button className="p-2 text-foreground/60 hover:text-foreground transition-colors rounded-lg hover:bg-muted/50">
+          <Bell className="w-5 h-5" strokeWidth={1.5} />
         </button>
 
         <DropdownMenu>
@@ -173,7 +188,7 @@ const Header = () => {
                 {user?.name ? getInitials(user.name) : "U"}
               </div>
             )}
-            <ChevronDown className="w-4 h-4 text-muted-foreground hidden sm:block" />
+            <ChevronDown className="w-4 h-4 text-foreground/60 hidden sm:block" strokeWidth={1.5} />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem
@@ -182,18 +197,18 @@ const Header = () => {
             >
               {theme === "dark" ? (
                 <>
-                  <Sun className="w-4 h-4 mr-2" />
+                  <Sun className="w-4 h-4 mr-2 text-foreground/70" strokeWidth={1.5} />
                   Light Mode
                 </>
               ) : (
                 <>
-                  <Moon className="w-4 h-4 mr-2" />
+                  <Moon className="w-4 h-4 mr-2 text-foreground/70" strokeWidth={1.5} />
                   Dark Mode
                 </>
               )}
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
-              <Settings className="w-4 h-4 mr-2" />
+              <Settings className="w-4 h-4 mr-2 text-foreground/70" strokeWidth={1.5} />
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -201,7 +216,7 @@ const Header = () => {
               onClick={handleLogout}
               className="cursor-pointer text-destructive"
             >
-              <LogOut className="w-4 h-4 mr-2" />
+              <LogOut className="w-4 h-4 mr-2" strokeWidth={1.5} />
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

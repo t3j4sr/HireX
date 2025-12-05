@@ -102,7 +102,7 @@ const CreateJD = () => {
           to="/dashboard"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
           <span className="text-sm">Back to Dashboard</span>
         </Link>
 
@@ -132,26 +132,7 @@ const CreateJD = () => {
               <div className="space-y-2">
                 <Textarea
                   id="jobDescription"
-                  placeholder={`Enter your complete job description here...
-
-Example:
-Senior React Engineer - San Francisco, CA (Remote)
-
-About the Role:
-We're looking for a Senior React Engineer to join our growing team...
-
-Requirements:
-• 5+ years of experience with React
-• Strong TypeScript skills
-• Experience with state management (Redux, Zustand)
-• Familiarity with testing frameworks
-
-Responsibilities:
-• Build and maintain web applications
-• Mentor junior developers
-• Participate in code reviews
-
-Skills: React, TypeScript, Node.js, AWS, Team Leadership`}
+                  placeholder="Enter your complete job description here..."
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
                   className="min-h-[400px] resize-none text-base leading-relaxed"
@@ -168,20 +149,16 @@ Skills: React, TypeScript, Node.js, AWS, Team Leadership`}
               >
                 {isProcessing ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" strokeWidth={1.5} />
                     AI is finding candidates...
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-5 h-5 mr-2" />
+                    <Sparkles className="w-5 h-5 mr-2" strokeWidth={1.5} />
                     Find Matching Candidates
                   </>
                 )}
               </Button>
-
-              <p className="text-center text-sm text-muted-foreground">
-                Our AI will analyze your requirements and rank candidates by match score
-              </p>
             </form>
           </motion.div>
 
@@ -194,7 +171,7 @@ Skills: React, TypeScript, Node.js, AWS, Team Leadership`}
           >
             <div className="border border-border rounded-xl p-4 bg-card">
               <div className="flex items-center gap-2 mb-4">
-                <FileText className="w-5 h-5 text-muted-foreground" />
+                <FileText className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                 <h3 className="font-semibold text-foreground">Recent JDs</h3>
               </div>
 
@@ -214,7 +191,7 @@ Skills: React, TypeScript, Node.js, AWS, Team Leadership`}
                         {jd.title}
                       </p>
                       <div className="flex items-center gap-1 mt-1">
-                        <Clock className="w-3 h-3 text-muted-foreground" />
+                        <Clock className="w-3 h-3 text-foreground/50" strokeWidth={1.5} />
                         <span className="text-xs text-muted-foreground">
                           {formatDate(jd.createdAt)}
                         </span>

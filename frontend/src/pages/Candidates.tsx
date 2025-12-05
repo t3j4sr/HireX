@@ -105,14 +105,22 @@ const Candidates = () => {
   };
 
   const handleDeleteCandidate = async (id: number) => {
-    if (confirm("Are you sure you want to delete this candidate?")) {
+    if (window.confirm("Are you sure you want to delete this candidate?")) {
       try {
         await api.deleteCandidate(id);
-        setCandidates(candidates.filter(c => c.id !== id));
-        toast.success("Candidate deleted");
-      } catch (error) {
+        // Update the candidates list
+        const updatedCandidates = candidates.filter(c => c.id !== id);
+        setCandidates(updatedCandidates);
+        toast.success("Candidate deleted successfully");
+        
+        // If we're on a job-specific view, refresh the candidates
+        if (jobId) {
+          fetchCandidates();
+        }
+      } catch (error: any) {
         console.error("Delete error:", error);
-        toast.error("Failed to delete candidate");
+        const errorMessage = error?.response?.data?.detail || error?.message || "Failed to delete candidate. Please try again.";
+        toast.error(errorMessage);
       }
     }
   };
@@ -210,12 +218,27 @@ const Candidates = () => {
     try {
       const results = await api.uploadResumes(files);
       console.log("Upload results:", results);
-      setUploadDialogOpen(false);
-      fetchCandidates();
-      toast.success("Resumes uploaded successfully");
-    } catch (error) {
+      
+      // Check if there are any errors in the results
+      const errors = results.filter((r: any) => r.status === "error");
+      const successes = results.filter((r: any) => r.status === "success");
+      
+      if (errors.length > 0) {
+        const errorMessages = errors.map((e: any) => `${e.filename}: ${e.detail || 'Unknown error'}`).join(", ");
+        toast.error(`Some files failed: ${errorMessages}`);
+      }
+      
+      if (successes.length > 0) {
+        setUploadDialogOpen(false);
+        fetchCandidates();
+        toast.success(`${successes.length} resume(s) uploaded successfully`);
+      } else {
+        toast.error("Failed to upload resumes. Please check file format (PDF or DOCX) and try again.");
+      }
+    } catch (error: any) {
       console.error("Upload error:", error);
-      toast.error("Failed to upload resumes");
+      const errorMessage = error?.response?.data?.detail || error?.message || "Failed to upload resumes. Please ensure the backend server is running.";
+      toast.error(errorMessage);
     }
   };
 
@@ -264,7 +287,7 @@ const Candidates = () => {
           className="flex flex-col sm:flex-row gap-3 mb-6"
         >
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50" strokeWidth={1.5} />
             <Input
               placeholder="Search by name, title, company, location, or skills..."
               value={searchQuery}
@@ -276,7 +299,7 @@ const Candidates = () => {
           <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="outline" className="flex items-center gap-2">
-                <Upload className="w-4 h-4" />
+                <Upload className="w-4 h-4" strokeWidth={1.5} />
                 Upload Resumes
               </Button>
             </DialogTrigger>
@@ -293,7 +316,7 @@ const Candidates = () => {
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <Loader2 className="w-8 h-8 animate-spin text-foreground/70" strokeWidth={1.5} />
             <span className="ml-2 text-muted-foreground">Loading candidates...</span>
           </div>
         ) : filteredCandidates.length === 0 ? (
@@ -339,22 +362,22 @@ const Candidates = () => {
                           </div>
                           <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1 flex-wrap">
                             <span className="flex items-center gap-1.5">
-                              <Briefcase className="w-4 h-4" />
+                              <Briefcase className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                               {candidate.title} at {candidate.company}
                             </span>
                             <span className="flex items-center gap-1.5">
-                              <MapPin className="w-4 h-4" />
+                              <MapPin className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                               {candidate.location}
                             </span>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-3 flex-shrink-0">
-                          <button className="p-2 text-muted-foreground hover:text-green-600 transition-colors">
-                            <ThumbsUp className="w-5 h-5" />
+                          <button className="p-2 text-foreground/50 hover:text-foreground transition-colors rounded-lg hover:bg-muted/50">
+                            <ThumbsUp className="w-5 h-5" strokeWidth={1.5} />
                           </button>
-                          <button className="p-2 text-muted-foreground hover:text-red-500 transition-colors">
-                            <ThumbsDown className="w-5 h-5" />
+                          <button className="p-2 text-foreground/50 hover:text-foreground transition-colors rounded-lg hover:bg-muted/50">
+                            <ThumbsDown className="w-5 h-5" strokeWidth={1.5} />
                           </button>
                         </div>
                       </div>
@@ -401,22 +424,22 @@ const Candidates = () => {
                               {/* Contact Info */}
                               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                 <a href={`mailto:${candidate.email}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                                  <Mail className="w-4 h-4" />
+                                  <Mail className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                                   <span className="truncate">{candidate.email}</span>
                                 </a>
                                 <a href={`tel:${candidate.phone}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                                  <Phone className="w-4 h-4" />
+                                  <Phone className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                                   <span>{candidate.phone}</span>
                                 </a>
                                 {candidate.linkedin && (
                                   <a href={`https://${candidate.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                                    <Linkedin className="w-4 h-4" />
+                                    <Linkedin className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                                     <span>LinkedIn</span>
                                   </a>
                                 )}
                                 {candidate.github && (
                                   <a href={`https://${candidate.github}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                                    <Github className="w-4 h-4" />
+                                    <Github className="w-4 h-4 text-foreground/60" strokeWidth={1.5} />
                                     <span>GitHub</span>
                                   </a>
                                 )}
@@ -425,7 +448,7 @@ const Candidates = () => {
                               {/* AI Analysis */}
                               <div className="pt-2">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <Sparkles className="w-4 h-4 text-primary" />
+                                  <Sparkles className="w-4 h-4 text-foreground/70" strokeWidth={1.5} />
                                   <span className="text-sm font-medium text-muted-foreground">AI ANALYSIS</span>
                                 </div>
                                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -434,17 +457,22 @@ const Candidates = () => {
                               </div>
 
                               {/* Delete Button */}
-                              <div className="flex justify-end mt-4 pt-4 border-t border-border">
+                              <div 
+                                className="flex justify-end mt-4 pt-4 border-t border-border"
+                                onClick={(e) => e.stopPropagation()}
+                              >
                                 <Button
                                   variant="destructive"
                                   size="sm"
                                   onClick={(e) => {
+                                    e.preventDefault();
                                     e.stopPropagation();
                                     handleDeleteCandidate(candidate.id);
                                   }}
                                   className="flex items-center gap-2"
+                                  type="button"
                                 >
-                                  <Trash className="w-4 h-4" />
+                                  <Trash className="w-4 h-4" strokeWidth={1.5} />
                                   Delete Candidate
                                 </Button>
                               </div>
